@@ -1,4 +1,5 @@
-﻿using LSC.RestaurantTableBookingApp.Service;
+﻿using LSC.RestaurantTableBookingApp.Core.ViewModels;
+using LSC.RestaurantTableBookingApp.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LSC.RestaurantTableBookingApp.API.Controllers
@@ -15,7 +16,7 @@ namespace LSC.RestaurantTableBookingApp.API.Controllers
         }
 
         [HttpGet("restaurants")]
-        [ProducesResponseType(200, Type = typeof(List<Models>))]
+        [ProducesResponseType(200, Type = typeof(List<RestaurantModel>))]
 
         public async Task<ActionResult> GetAllRestaurantsAsync()
         {

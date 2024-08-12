@@ -12,7 +12,7 @@ namespace LSC.RestaurantTableBookingApp.Data
 
         }
 
-        public async Task<IEnumerable<RestaurantBranchModel>> GerRestaurantBranchesByRestaurantIdAsync(int restaurantId)
+        public async Task<IEnumerable<RestaurantBranchModel>> GetRestaurantBranchesByRestaurantIdAsync(int restaurantId)
         {
             var branches = await _dbContext.RestaurantBranches
                 .Where(rb => rb.RestaurantId == restaurantId)
@@ -81,14 +81,29 @@ namespace LSC.RestaurantTableBookingApp.Data
             });
         }
 
-        public Task<IEnumerable<DiningTableWithTimeSlotsModel>> GetDiningTablesByBranchAsync(int branchId)
+        public async Task<IEnumerable<DiningTableWithTimeSlotsModel>> GetDiningTablesByBranchAsync(int branchId)
         {
-            throw new NotImplementedException();
+            var data = await (
+                from rb in _dbContext.RestaurantBranches
+                join dt in _dbContext.DiningTables on rb.Id equals dt.RestaurantBranchId
+                join ts in _dbContext.TimeSlots on dt.Id equals ts.DiningTableId
+                where dt.RestaurantBranchId == branchId && ts.ReservationDay >= DateTime.Now.Date
+                orderby ts.Id, ts.MealType
+                select new DiningTableWithTimeSlotsModel()
+                {
+                    BranchId = rb.Id,
+                    Capacity = dt.Capacity,
+                    TableName = dt.TableName,
+                    Mealtype = ts.MealType,
+                    ReservationDay = ts.ReservationDay,
+                    TableStatus = ts.TableStatus,
+                    TimeSlotId = ts.Id
+                })
+                .ToListAsync();
+
+            return data;
         }
 
-        Task<List<RestaurantModel>> IRestaurantRepository.GetAllRestaurantsAsync()
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

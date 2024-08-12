@@ -1,4 +1,5 @@
-﻿using LSC.RestaurantTableBookingApp.Data;
+﻿using LSC.RestaurantTableBookingApp.Core.ViewModels;
+using LSC.RestaurantTableBookingApp.Data;
 
 namespace LSC.RestaurantTableBookingApp.Service
 {
@@ -10,9 +11,25 @@ namespace LSC.RestaurantTableBookingApp.Service
         {
             this._restaurantRepository = restaurantRepository;
         }
-        public Task<List<Models>> GetAllRestaurantsAsync()
+
+        public Task<IEnumerable<RestaurantBranchModel>> GetRestaurantBranchesByRestaurantIdAsync(int restaurantId)
+        {
+            return _restaurantRepository.GetRestaurantBranchesByRestaurantIdAsync(restaurantId);
+        }
+
+        public Task<List<RestaurantModel>> GetAllRestaurantsAsync()
         {
             return _restaurantRepository.GetAllRestaurantsAsync();
+        }
+
+        public Task<IEnumerable<DiningTableWithTimeSlotsModel>> GetDiningTablesByBranchAsync(int branchId, DateTime date)
+        {
+            return _restaurantRepository.GetDiningTablesByBranchAsync(branchId, date);
+        }
+
+        public Task<IEnumerable<DiningTableWithTimeSlotsModel>> GetDiningTablesByBranchAsync(int branchId)
+        {
+            return _restaurantRepository.GetDiningTablesByBranchAsync(branchId);
         }
     }
 }
