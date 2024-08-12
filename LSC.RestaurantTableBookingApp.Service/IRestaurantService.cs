@@ -1,10 +1,8 @@
-﻿using LSC.RestaurantTableBookingApp.Core.ViewModels;
-
-namespace LSC.RestaurantTableBookingApp.Service
+﻿namespace LSC.RestaurantTableBookingApp.Service
 {
     public interface IRestaurantService
     {
-        Task<List<RestaurantModel>> GetAllRestaurantsAsync();
+        Task<List<Models>> GetAllRestaurantsAsync();
 
     }
 }

@@ -1,5 +1,4 @@
-﻿using LSC.RestaurantTableBookingApp.Core.ViewModels;
-using LSC.RestaurantTableBookingApp.Data;
+﻿using LSC.RestaurantTableBookingApp.Data;
 
 namespace LSC.RestaurantTableBookingApp.Service
 {
@@ -11,7 +10,7 @@ namespace LSC.RestaurantTableBookingApp.Service
         {
             this._restaurantRepository = restaurantRepository;
         }
-        public Task<List<RestaurantModel>> GetAllRestaurantsAsync()
+        public Task<List<Models>> GetAllRestaurantsAsync()
         {
             return _restaurantRepository.GetAllRestaurantsAsync();
         }

@@ -1,5 +1,6 @@
 
 using LSC.RestaurantTableBookingApp.Data;
+using LSC.RestaurantTableBookingApp.Service;
 using Microsoft.EntityFrameworkCore;
 
 namespace RestaurantTableBookingApp.API
@@ -11,8 +12,9 @@ namespace RestaurantTableBookingApp.API
             var builder = WebApplication.CreateBuilder(args);
             var configuration = builder.Configuration;
             // Add services to the container.
-            builder.Services.AddDbContext<RestaurantTableBookingDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DbContext") ?? "").EnableSensitiveDataLogging());   
-             
+            builder.Services.AddDbContext<RestaurantTableBookingDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DbContext") ?? "").EnableSensitiveDataLogging());
+            builder.Services.AddScoped<IRestaurantRepository, RestaurantRepository>();
+            builder.Services.AddScoped<IRestaurantService, RestaurantService>();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
