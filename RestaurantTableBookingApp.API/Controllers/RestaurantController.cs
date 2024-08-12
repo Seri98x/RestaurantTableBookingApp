@@ -24,5 +24,53 @@ namespace LSC.RestaurantTableBookingApp.API.Controllers
             var restaurants = await _restaurantService.GetAllRestaurantsAsync();
             return Ok(restaurants);
         }
+
+        [HttpGet("branches/{restaurantId}")]
+        [ProducesResponseType(200, Type = typeof(List<RestaurantBranchModel>))]
+        [ProducesResponseType(404)]
+
+        public async Task<ActionResult<IEnumerable<RestaurantBranchModel>>> GetRestaurantBranchesByRestaurantIdAsync(int restaurantId)
+        {
+
+            var branches = await _restaurantService.GetRestaurantBranchesByRestaurantIdAsync(restaurantId);
+            if (branches == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(branches);
+        }
+
+        [HttpGet("diningtables/{branchId}")]
+        [ProducesResponseType(200, Type = typeof(List<DiningTableWithTimeSlotsModel>))]
+        [ProducesResponseType(404)]
+
+        public async Task<ActionResult<IEnumerable<DiningTableWithTimeSlotsModel>>> GetDiningTablesByBranchAsync(int branchId)
+        {
+
+            var diningTables = await _restaurantService.GetDiningTablesByBranchAsync(branchId);
+            if (diningTables == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(diningTables);
+        }
+
+        [HttpGet("diningtables/{branchId}/date")]
+        [ProducesResponseType(200, Type = typeof(List<DiningTableWithTimeSlotsModel>))]
+        [ProducesResponseType(404)]
+
+        public async Task<ActionResult<IEnumerable<DiningTableWithTimeSlotsModel>>> GetDiningTablesByBranchAndDateAsync(int branchId, DateTime date)
+        {
+
+            var diningTables = await _restaurantService.GetDiningTablesByBranchAsync(branchId);
+            if (diningTables == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(diningTables);
+        }
     }
 }
